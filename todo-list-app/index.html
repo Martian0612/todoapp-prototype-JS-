@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todolist App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+    <!-- For getting the calender -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+</head>
+
+<body>
+
+    <p id="demo"></p>
+    <!-- previous code for task and saving the task. -->
+
+    <!-- <input type="text" id="item" name="item">
+    <button id = "save">save</button> -->
+
+    <div id="home-page" class="page" style="display:block;">
+        <h1>Welcome to Martian TaskForge Pro.</h1>
+
+        <form id="user-data" action="#">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+            <br><br>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <br><br>
+            <!-- <input type="submit" value="Submit"> -->
+            <!-- Changing the submit button type to avoid automatic submission and reloading of page. And in order to properly handle javascript. -->
+            <button type="submit" id="submitBtn" name="submitBtn">Submit</button>
+        </form>
+        <br>
+
+
+
+        <div id="user-dropdown">
+
+            <label for="choose-user"></label>
+            <select name="choose-user" id="choose-user">
+                <option value="select any option" disabled selected>Choose an option</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div id="user-profile" class="page" style="display:none;">
+        <p>
+            <!-- <h2>Hi <b>{{username}}</b>!</h2> -->
+        <h4>
+            You can <b>add new tasks</b> by clicking the <b>"Add Task"</b> button.
+            <br>
+            You can <b>view your tasks</b> by clicking the <b>"Display Tasks"</b> button.
+        </h4>
+        </p>
+        <br><br><br>
+
+        <form id="task-creation" action="#">
+
+            <label for="task">Task:</label>
+            <input type="text" id="task" name="task">
+
+            <br><br>
+
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" rows="4" cols="50"
+                placeholder="Enter your description here...">
+
+            </textarea>
+
+            <br><br>
+
+            <label for="status">Set current status: </label>
+            <select name="status" id="status">
+                <option value="" disabled selected>Select an option</option>
+                <option value="not started">Not Started</option>
+                <option value="in progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+
+            <br><br>
+
+            <label for="priority">Set your Priority: </label>
+            <select name="priority" id="priority">
+                <option value="" disabled selected>Select an option</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <br><br>
+            <label for="dueDate">Due Date</label>
+            <input type="text" id="dueDate" placeholder="Select Due Date and Time">
+            <br><br>
+            <!-- <button>Save</button> -->
+            <button type="submit" id="add-task">Add Task</button>
+        </form>
+
+        <br><br>
+        <div id = "task-display">
+            <ol style="list-style-type: none;">
+                
+            </ol>
+        </div>
+        <br><br>
+        <button type="button" id="back-to-home">Home</button>
+
+
+    </div>
+
+    
+
+
+    <!-- script for flatpickr library  -->
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#dueDate", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+                altInput: true,
+                altFormat: "F j, Y h:i K",
+                minDate: "today"
+            });
+        });
+
+    </script>
+
+    <script type="module" src="navigation.js" defer></script>
+    <script type="module" src="ui.js" defer></script>
+    <script type="module" src="data.js" defer></script>
+    <script type="module" src="app.js" defer> </script>
+
+
+
+    <!-- below is a wrong way. -->
+    <!-- <script type = "module">
+        import sum from "./todolist.js";
+        document.getElementById("demo").innerHTML = sum(4,5);
+    </script> -->
+</body>
+
+</html>

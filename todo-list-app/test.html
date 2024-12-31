@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://unpkg.com/@yaireo/tagify/dist/tagify.css">
+    <style>
+        #tagInputContainer {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+        .tagify__tag {
+          margin: 2px; /* Adjust spacing as needed */
+        }
+        .tagify__tag__removeBtn {
+          margin: 0 3px;
+        }
+    </style>
+</head>
+<body>
+
+<label for="predefinedTags">Predefined Tags:</label>
+<select id="predefinedTags">
+    <option value="">Select a tag</option>
+    <option value="Work">Work</option>
+    <option value="Personal">Personal</option>
+    <option value="Urgent">Urgent</option>
+    <option value="Shopping">Shopping</option>
+</select>
+
+<button id="addTagButton">Add Tags</button>
+
+<div id="tagInputContainer">
+    <label for="taskTags">Custom Tags:</label><br>
+    <input id="taskTags" name="taskTags" placeholder="Add custom tags...">
+</div>
+
+<div id="taskList"></div>
+
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tagInputContainer = document.getElementById('tagInputContainer');
+        const addTagButton = document.getElementById('addTagButton');
+        const predefinedTagsSelect = document.getElementById('predefinedTags');
+        const tagInput = document.getElementById('taskTags');
+        const taskList = document.getElementById('taskList');
+        let tagify;
+
+        addTagButton.addEventListener('click', function() {
+            tagInputContainer.style.maxHeight = tagInputContainer.scrollHeight + "px";
+            addTagButton.style.display = 'none';
+            if (!tagify) {
+                tagify = new Tagify(tagInput, {
+                    maxTags: 4,
+                    enforceWhitelist: false
+                });
+            }
+        });
+
+        predefinedTagsSelect.addEventListener('change', function() {
+            const selectedTag = this.value;
+            if (selectedTag && tagify) {
+                tagify.addTags(selectedTag);
+                this.selectedIndex = 0;
+            }
+        });
+
+        const tasks = [
+            { name: 'Grocery Shopping', tags: [{ value: 'Shopping' }] },
+            { name: 'Project Meeting', tags: [{ value: 'Work' }, { value: 'Urgent' }] }
+        ];
+
+        function displayTasks() {
+            taskList.innerHTML = '';
+            tasks.forEach(task => {
+                const taskDiv = document.createElement('div');
+                taskDiv.innerHTML = `<h3>${task.name}</h3>`;
+                const tagDiv = document.createElement('div');
+                task.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    // Simple random color generation (improve as needed)
+                    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                    span.style.backgroundColor = randomColor;
+                    span.style.padding = '5px';
+                    span.style.margin = '2px';
+                    span.style.borderRadius = '5px';
+                    span.textContent = tag.value;
+                    tagDiv.appendChild(span);
+                });
+                taskDiv.appendChild(tagDiv);
+                taskList.appendChild(taskDiv);
+            });
+        }
+
+        displayTasks();
+    });
+</script>
+
+</body>
+</html>
