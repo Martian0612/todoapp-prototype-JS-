@@ -307,7 +307,10 @@ function setupEventListeners(){
         if(!userMap.has(email)){
             const newUser = new User(name, email);
             userMap.set(email,newUser);
+            // 
+            userList = Array.from(userMap.values());
             localStorage.setItem(userListKey, JSON.stringify(Array.from(userMap.values()).map(user => user.toData())));
+            
             updateUserDropdown();
             alert("New user added successfully");
             document.getElementById("user-data").reset();
@@ -346,6 +349,7 @@ function setupEventListeners(){
             // currentUser.addTasks(task);
             currentUser.addTasks(task,description,status,priority,dueDate);
             localStorage.setItem(userListKey, JSON.stringify(Array.from(userMap.values()).map(user => user.toData())));
+            displayTask(currentUser);
             alert("Task created successfully.");
             document.getElementById("task-creation").reset();
         }
