@@ -8,16 +8,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
     <!-- For getting the calender -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
-
-    <p id="demo"></p>
-    <!-- previous code for task and saving the task. -->
-
-    <!-- <input type="text" id="item" name="item">
-    <button id = "save">save</button> -->
 
     <div id="home-page" class="page" style="display:block;">
         <h1>Welcome to Martian TaskForge Pro.</h1>
@@ -37,7 +32,6 @@
         <br>
 
 
-
         <div id="user-dropdown">
 
             <label for="choose-user"></label>
@@ -50,77 +44,81 @@
 
     <div id="user-profile" class="page" style="display:none;">
         <p>
-            <!-- <h2>Hi <b>{{username}}</b>!</h2> -->
         <h4>
             You can <b>add new tasks</b> by clicking the <b>"Add Task"</b> button.
             <br>
-            You can <b>view your tasks</b> by clicking the <b>"Display Tasks"</b> button.
+            You can <b>update tasks</b> by clicking on any task.
         </h4>
         </p>
-        <br><br><br>
 
-        <form id="task-creation" action="#">
+        <!-- Add Task Button -->
+        <button type="button" id="open-task-modal">Add Task</button>
 
-            <label for="task">Task:</label>
-            <input type="text" id="task" name="task">
+        <!-- Task Modal -->
+        <div id="task-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Add Task</h2>
+                    <button type="button" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="task-form">
+                        <label for="modal-task">Task:</label>
+                        <input type="text" id="modal-task" name="task" aria-required="true">
 
-            <br><br>
+                        <br><br>
 
-            <label for="description">Description:</label>
-            <textarea name="description" id="description" rows="4" cols="50"
-                placeholder="Enter your description here...">
+                        <label for="modal-description">Description:</label>
+                        <textarea name="description" id="modal-description" rows="4" cols="50" maxlength="350"
+                            placeholder="Enter your description here...">
+                        </textarea>
 
-            </textarea>
+                        <br><br>
 
-            <br><br>
+                        <label for="modal-status">Set current status: </label>
+                        <select name="status" id="modal-status">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="not started">Not Started</option>
+                            <option value="in progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
 
-            <label for="status">Set current status: </label>
-            <select name="status" id="status">
-                <option value="" disabled selected>Select an option</option>
-                <option value="not started">Not Started</option>
-                <option value="in progress">In Progress</option>
-                <option value="completed">Completed</option>
-            </select>
+                        <br><br>
 
-            <br><br>
+                        <label for="modal-priority">Set your Priority: </label>
+                        <select name="priority" id="modal-priority" >
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
 
-            <label for="priority">Set your Priority: </label>
-            <select name="priority" id="priority">
-                <option value="" disabled selected>Select an option</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-            </select>
+                        <br><br>
+                        <label for="modal-dueDate">Due Date</label>
+                        <input type="text" id="modal-dueDate" placeholder="Select Due Date and Time">
+                        <br><br>
 
-            <br><br>
-            <label for="dueDate">Due Date</label>
-            <input type="text" id="dueDate" placeholder="Select Due Date and Time">
-            <br><br>
-            <!-- <button>Save</button> -->
-            <button type="submit" id="add-task">Add Task</button>
-        </form>
+                        <button type="submit" id="save-task">Save Task</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <br><br>
-        <div id = "task-display">
+        <div id="task-display">
             <ol style="list-style-type: none;">
-                
             </ol>
         </div>
         <br><br>
         <button type="button" id="back-to-home">Home</button>
-
-
     </div>
-
-    
-
 
     <!-- script for flatpickr library  -->
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            flatpickr("#dueDate", {
+            flatpickr("#modal-dueDate", {
                 enableTime: true,
                 dateFormat: "Y-m-d H:i",
                 altInput: true,
@@ -134,15 +132,10 @@
     <script type="module" src="navigation.js" defer></script>
     <script type="module" src="ui.js" defer></script>
     <script type="module" src="data.js" defer></script>
+    <script type="module" src="validation.js" defer></script>
     <script type="module" src="app.js" defer> </script>
 
 
-
-    <!-- below is a wrong way. -->
-    <!-- <script type = "module">
-        import sum from "./todolist.js";
-        document.getElementById("demo").innerHTML = sum(4,5);
-    </script> -->
 </body>
 
 </html>
