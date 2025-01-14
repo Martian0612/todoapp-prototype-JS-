@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todolist App</title>
+    <title>Martian TaskForge Pro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
     <!-- For getting the calender -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -13,46 +13,90 @@
 </head>
 
 <body>
+    <div id="home-page" class="page">
+        <h1 class="title">Welcome to Martian TaskForge Pro.</h1>
 
-    <div id="home-page" class="page" style="display:block;">
-        <h1>Welcome to Martian TaskForge Pro.</h1>
+        <div class="auth-container">
+            <h2>Create Account</h2>
+            <form id="user-data">
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" required placeholder="Enter your name">
+                </div>
 
-        <form id="user-data" action="#">
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
-            <br><br>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required placeholder="Enter your email">
+                </div>
+                <button type="submit" id="submitBtn" class="submit-btn">Create Account</button>
+            </form>
 
-            <br><br>
-            <!-- <input type="submit" value="Submit"> -->
-            <!-- Changing the submit button type to avoid automatic submission and reloading of page. And in order to properly handle javascript. -->
-            <button type="submit" id="submitBtn" name="submitBtn">Submit</button>
-        </form>
-        <br>
+            <button type="button" class="select-user-btn" id="selectUserBtn">
+                Select Existing User
+            </button>
 
-
-        <div id="user-dropdown">
-
-            <label for="choose-user"></label>
-            <select name="choose-user" id="choose-user">
-                <option value="select any option" disabled selected>Choose an option</option>
-            </select>
+            <!-- Keep the original dropdwon hidden but available for JS compatibitliy -->
+            <!-- <div id="user-dropdown" style="display: none;">
+                <label for="choose-user"></label>
+                <select name="choose-user" id="choose-user">
+                    <option value="select any option" disabled selected>Choose an existing user</option>
+                </select>
+            </div> -->
         </div>
     </div>
 
 
+    <!-- User Selection Modal -->
+    <div class="user-modal" id="userModal">
+        <div class="user-modal-content">
+            <div class="user-modal-header">
+                <h2>Select User</h2>
+                <button class="close-user-modal" id="closeUserModal">&times;</button>
+            </div>
+            <div class="user-list" id="userList">
+
+            </div>
+        </div>
+    </div>
+
     <div id="user-profile" class="page" style="display:none;">
         <p>
-        <h4>
+            <!-- <h4>
             You can <b>add new tasks</b> by clicking the <b>"Add Task"</b> button.
             <br>
             You can <b>update tasks</b> by clicking on any task.
-        </h4>
+        </h4> -->
         </p>
+        <div class="main-container">
+            <div class="sidebar">
+
+                <button type="button" class="sidebar-add-task" id="open-task-modal">+ Add New Task </button>
+                <div class="search-container">
+                    <input type="text" placeholder="Search tasks...">
+                </div>
+
+                <div class="sort-container">
+                    <select>
+                        <option value="" disabled selected>Sort tasks by...</option>
+                        <option value="date">Due Date</option>
+                        <option value="priority">Priority</option>
+                        <option value="status">Status</option>
+                    </select>
+                </div>
+                <button type="button" class="back-to-home" id="back-to-home">Home</button>
+
+            </div>
+            <div class="content-area">
+                <div id="task-display">
+                    <ol style="list-style-type: none;">
+                    </ol>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Add Task Button -->
-        <button type="button" id="open-task-modal">Add Task</button>
+        <!-- <button type="button" id="open-task-modal">Add Task</button> -->
 
         <!-- Task Modal -->
         <div id="task-modal" style="display: none;">
@@ -86,7 +130,7 @@
                         <br><br>
 
                         <label for="modal-priority">Set your Priority: </label>
-                        <select name="priority" id="modal-priority" >
+                        <select name="priority" id="modal-priority">
                             <option value="" disabled selected>Select an option</option>
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
@@ -104,13 +148,9 @@
             </div>
         </div>
 
-        <br><br>
-        <div id="task-display">
-            <ol style="list-style-type: none;">
-            </ol>
-        </div>
-        <br><br>
-        <button type="button" id="back-to-home">Home</button>
+        <!-- <br><br> -->
+
+
     </div>
 
     <!-- script for flatpickr library  -->
